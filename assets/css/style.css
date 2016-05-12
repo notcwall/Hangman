@@ -1,0 +1,56 @@
+body{
+	line-height: 30px;
+	background-image: url(../images/america.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	text-align: center;
+	font-weight: bold;
+}
+
+p{
+	margin-top: 60px;
+	margin-left: 110px;
+}
+
+#game{
+	font-size: 40px;
+	margin-bottom: 30px;
+	background-color: #FF0000;
+	height: 50px;
+	padding: 15px 0 0 0;
+}
+
+#wrapper{
+	margin: 0 auto;
+	max-width: 750px;
+	line-height: 40px;
+}
+
+#leftbar{
+	float: left;
+	margin: auto;
+	width: 250px;
+	height: 200px;
+	background-color: #FFFFFF;
+}
+
+#centerbar{
+	float: left;
+	background-image: url(../images/statue_of_liberty.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 250px;
+	height: 200px;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#rightbar{
+	float: right;
+	margin: auto;
+	width: 250px;
+	height: 200px;
+	background-color: #0000FF;
+	color: #FFFFFF;
+}

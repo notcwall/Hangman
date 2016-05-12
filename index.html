@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="assets/css/reset.css" type="text/css">
+		<link rel="stylesheet" href="assets/css/style.css" type="text/css">
+	</head>
+	<body>
+		<div id="game">
+		</div>
+		<div id="wrapper">
+			<div id="leftbar">
+			</div>
+			<div id="rightbar">
+			</div>
+			<div id="centerbar">
+			</div>
+		</div>
+
+		<script>
+
+			function Answer(word, hint, difficulty){
+				this.word = word;
+				this.hint = hint;
+				this.difficulty = difficulty;
+			}
+
+			var wordBank = [
+				new Answer('washington', 'Known as "The father of the country"', 5),
+				new Answer('hamilton', 'Championed the original idea for a National Bank', 9),
+				new Answer('lincoln', 'Famous for saying "A house divided against itself cannot stand."', 6),
+				new Answer('jackson', 'Known for "killing" the National Bank', 10),
+				new Answer('reagan', 'Was an actor before becoming President', 6),
+				new Answer('roosevelt', 'Holds the record for most terms in office', 7),
+				new Answer('eisenhower', 'Was a five-star general in the Army before becoming President', 8),
+				new Answer('kennedy', 'Was the youngest person to be elected President', 7),
+				new Answer('wilson', 'Helped to create the League of Nations', 12),
+				new Answer('obama', 'Campaigned for universal health care', 5)
+			]
+
+			var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+			var userGuess;
+			var remainingGuesses;
+			var currentAnswer;
+			var displayedAnswer = [];
+			var correctWord = [];
+			var incorrectGuesses = [];
+			var winCount = 0;
+			var lossCount = 0;
+			var winAudio = new Audio('assets/sounds/big_brain.wav');
+			var lossAudio = new Audio('assets/sounds/break_concentration.wav');
+
+			//randomly choose from word bank, store correct word in currentAnswer array and set displayedAnswer array to a list of underscores the length of the correct answer
+			currentAnswer = wordBank[(Math.floor(Math.random() * wordBank.length))];
+			remainingGuesses = currentAnswer.difficulty;
+			for(var i = 0; i < currentAnswer.word.length; i++){
+				correctWord.push(currentAnswer.word[i]);
+				displayedAnswer.push('_');
+			}
+
+			document.getElementById("game").innerHTML = "Hangman!";
+			document.getElementById("centerbar").innerHTML = "<p>US<br>Presidents</p>";
+			document.getElementById("leftbar").innerHTML = "" + displayedAnswer + "<br>Incorrect Guesses: " + incorrectGuesses + "<br>Remaining Guesses: " + remainingGuesses;
+			document.getElementById("rightbar").innerHTML = "Hint: " + currentAnswer.hint + "<br>Wins: " + winCount + "<br>Losses: " + lossCount;
+
+			document.onkeyup = function(event){
+
+				var isCorrectGuess = false;
+				userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+
+				//only perform if user guess is a letter of the alphabet
+				if(alphabet.indexOf(userGuess) != -1){
+
+					//compare user input to array containing the correct character values
+					for(var i = 0; i < correctWord.length; i++){
+						var tempCorrect = false;
+						if(userGuess == correctWord[i]){
+							isCorrectGuess = true;
+							tempCorrect = true;
+						}
+						if(tempCorrect == true){
+							displayedAnswer[i] = correctWord[i];
+						}
+					}
+
+					//decrement remaining guesses if user input is an incorrect guess, add user input to the displayed incorrect guesses array
+					if(isCorrectGuess == false){
+						remainingGuesses--;
+						incorrectGuesses.push(userGuess);
+					}
+
+					//end of game conditions, reset necessary variables
+					if(remainingGuesses == 0 || displayedAnswer.indexOf('_') < 0){
+						if(remainingGuesses == 0){
+							lossCount++;
+							lossAudio.play();
+						}
+						if(displayedAnswer.indexOf('_') < 0){
+							winCount++;
+							winAudio.play();
+						}
+						currentAnswer = wordBank[(Math.floor(Math.random() * wordBank.length))];
+						remainingGuesses = currentAnswer.difficulty;
+						displayedAnswer = [];
+						correctWord = [];
+						incorrectGuesses = [];
+						for(var i = 0; i < currentAnswer.word.length; i++){
+							correctWord.push(currentAnswer.word[i]);
+							displayedAnswer.push('_');
+						}
+					}
+
+					document.getElementById("leftbar").innerHTML = "" + displayedAnswer + "<br>Incorrect Guesses: " + incorrectGuesses + "<br>Remaining Guesses: " + remainingGuesses;
+					document.getElementById("rightbar").innerHTML = "Hint: " + currentAnswer.hint + "<br>Wins: " + winCount + "<br>Losses: " + lossCount;
+				}
+			}
+		</script>
+	</body>
+</html>
