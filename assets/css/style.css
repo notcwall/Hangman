@@ -5,6 +5,7 @@ body{
 	background-repeat: no-repeat;
 	text-align: center;
 	font-weight: bold;
+	font-family: sans-serif;
 }
 
 p{
@@ -41,7 +42,7 @@ p{
 	background-repeat: no-repeat;
 	width: 250px;
 	height: 200px;
-	font-size: 30px;
+	font-size: 25px;
 	font-weight: bold;
 	text-align: center;
 }
